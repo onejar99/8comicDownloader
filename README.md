@@ -33,7 +33,7 @@ $ node src/index.js
 ### step 3. Check `output` folder
 
 
-### Appendix. How To Use By Docker
+## Appendix. How To Use By Docker
 
 Of course, if you prefer to use docker, it also works:
 
