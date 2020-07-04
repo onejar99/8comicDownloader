@@ -13,7 +13,7 @@
 1. Install Node.js environment.
 2. Download this source code.
 
-> If you have no idea how to install Node.js, you cann refer to following:
+> If you have no idea how to install Node.js, you can refer to following:
 > * [[Node.js] 安裝 NVM (Node Version Manager) 來切換 Node.js 版本 for Windows](https://www.onejar99.com/nvm-install-for-windows/)
 > * [[Node.js] 安裝 NVM (Node Version Manager) 來切換 Node.js 版本 for MacOS/CentOS/Ubuntu](https://www.onejar99.com/nvm-install-for-unix-like/)
 
