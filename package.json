@@ -1,0 +1,17 @@
+{
+  "name": "8comicdownloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "after-load": "^1.0.4",
+    "axios": "^0.19.2",
+    "node-html-parser": "^1.2.20",
+    "request": "^2.88.2"
+  }
+}

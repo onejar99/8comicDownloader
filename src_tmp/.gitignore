@@ -1,0 +1,6 @@
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore
+# keep a sample
+!sample_script_7340_1-2.js
