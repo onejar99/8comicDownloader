@@ -41,7 +41,8 @@ Of course, if you prefer to use docker, it also works:
 $ git clone https://github.com/onejar99/8comicDownloader.git
 $ cd 8comicDownloader
 $ vi src/index.js
-$ docker run -ti --rm -v $(pwd):/8comicDownloader
+$ docker run -ti --rm -v $(pwd):/8comicDownloader node:lts /bin/bash
+# in docker container
 root@f2bf5f9b0c03:/# cd 8comicDownloader
 root@f2bf5f9b0c03:/8comicDownloader# node src/index.js
 ```
