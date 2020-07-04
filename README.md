@@ -8,7 +8,7 @@
 
 ## How To Use
 
-### Prerequisite
+### Prerequisites
 
 1. Install Node.js environment.
 2. Download this source code.
