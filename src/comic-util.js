@@ -72,7 +72,7 @@ const downloadSinglePage = async (fullFolderPath, comicId, chNo, pageNo) => {
     //console.log(`scriptPath=[${scriptPath}]`);
     const tmpLib = require(scriptPath);
     let url = tmpLib.getImgUrl();
-    let savePath = `${fullFolderPath}/${chNo}_${commonUtil.paddingZero(pageNo, 3)}.jpg`;
+    let savePath = `${fullFolderPath}/${commonUtil.paddingZero(chNo, 4)}_${commonUtil.paddingZero(pageNo, 3)}.jpg`;
     console.log(`url=[${url}] savePath=[${savePath}]`);
 
     commonUtil.downloadAndSave(url, savePath, () => {
@@ -82,7 +82,7 @@ const downloadSinglePage = async (fullFolderPath, comicId, chNo, pageNo) => {
 
 const downloadComic = async (outputRootFolder, comicId, chNo) => {
     let parentFolderPath = `${outputRootFolder}/${comicId}`;
-    let fullFolderPath = `${outputRootFolder}/${comicId}/${chNo}`;
+    let fullFolderPath = `${outputRootFolder}/${comicId}/${commonUtil.paddingZero(chNo, 4)}`;
     commonUtil.createFolder(parentFolderPath);
     commonUtil.createFolder(fullFolderPath);
   
