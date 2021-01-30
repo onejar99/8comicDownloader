@@ -12,6 +12,7 @@
     "after-load": "^1.0.4",
     "axios": "^0.21.1",
     "node-html-parser": "^1.2.20",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "winston": "^3.3.3"
   }
 }

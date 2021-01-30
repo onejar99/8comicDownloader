@@ -1,5 +1,6 @@
 const afterLoad = require('after-load');
 const commonUtil = require('./common-util.js');
+const logger = require('./logger.js')
 
 const getWebFirstPageUrl = (comicId, chNo) => {
     return `https://comicbus.live/online/a-${comicId}.html?ch=${chNo}`;
@@ -24,7 +25,7 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
         endIdx = htmlText.indexOf(".src=") + 5;
         let snippetToReplaced = htmlText.substring(startIdx, endIdx);
         tmpScript = tmpScript.replace(snippetToReplaced, "ci=i;return 'https:' + ");
-        //console.log(tmpScript);
+        logger.debug(tmpScript);
 
         // 2. compose
         let header = `function getImgUrl() {
@@ -58,11 +59,11 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
         let tmpScriptFileName = `script_${comicId}_${chNo}-${pageNo}.js`;
         let tmpScriptFilePath = `./src_tmp/${comicId}/${chNo}/${tmpScriptFileName}`;
         commonUtil.generateFile(tmpScriptFilePath, tmpScript);
-        //console.log(`generate ok: ${tmpScriptFilePath}`);
+        logger.debug(`generate ok: ${tmpScriptFilePath}`);
         return tmpScriptFileName;
     })
     .catch((errMsg)=>{
-        console.log(`Error! Msg=[${errMsg}]`);
+        logger.error(`Error! Msg=[${errMsg}]`);
     });
 }
 
@@ -73,14 +74,14 @@ const downloadSinglePage = async (fullFolderPath, comicId, chNo, pageNo) => {
     let scriptName = await generateTempScriptAsync(comicId, chNo, pageNo);
     let scriptPath = `../src_tmp/${comicId}/${chNo}/${scriptName}`;
 
-    //console.log(`scriptPath=[${scriptPath}]`);
+    logger.debug(`scriptPath=[${scriptPath}]`);
     const tmpLib = require(scriptPath);
     let url = tmpLib.getImgUrl();
     let savePath = `${fullFolderPath}/${commonUtil.paddingZero(chNo, 4)}_${commonUtil.paddingZero(pageNo, 3)}.jpg`;
-    console.log(`url=[${url}] savePath=[${savePath}]`);
+    logger.info(`url=[${url}] savePath=[${savePath}]`);
 
     commonUtil.downloadAndSave(url, savePath, () => {
-        console.log(`savePath=[${savePath}] Done!`)
+        logger.info(`savePath=[${savePath}] Done!`)
     });
 }
 
@@ -90,9 +91,9 @@ const downloadComic = async (outputRootFolder, comicId, chNo) => {
     commonUtil.createFolder(parentFolderPath);
     commonUtil.createFolder(fullFolderPath);
   
-    console.log(`task start: ${comicId} ${chNo}`);
+    logger.info(`task start: ${comicId} ${chNo}`);
     let pageMax = getPageCount(comicId, chNo);
-    console.log(`get page count: ${pageMax}`);
+    logger.info(`get page count: ${pageMax}`);
     for (let i = 1; i <= pageMax; i++) {
         let pageNo = i;
         // for parallel
