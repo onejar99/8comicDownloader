@@ -113,3 +113,5 @@ else ch = parseInt(ch);*/
 module.exports = {
     getImgUrl
 };
+
+console.log(getImgUrl());
