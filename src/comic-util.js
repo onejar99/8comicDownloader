@@ -19,7 +19,7 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
         let startIdx = htmlText.indexOf('var pi=ch;');
         let endIdx = htmlText.indexOf("var nt=");
         let tmpScript = htmlText.substring(startIdx, endIdx);
-        tmpScript = tmpScript.replace("ge('TheImg').src='//img'", "return 'https://img'")
+        tmpScript = tmpScript.replace("ge(yeyt__y_6o(6)+yeyt__y_6o(5)).src=", "return 'https:' + ")
         //console.log(tmpScript);
 
         // 2. compose
