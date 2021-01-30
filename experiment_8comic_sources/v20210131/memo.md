@@ -20,10 +20,13 @@ get page count: 31
 https://comicbus.live/online/a-7340.html?ch=1-2
 https://img2.8comic.com/3/7340/1/002_AQU.jpg
 ```
-
 ```
 https://comicbus.live/online/a-7340.html?ch=5-4
 https://img1.8comic.com/3/7340/5/004_F89.jpg
+```
+```
+https://comicbus.live/online/a-7839.html?ch=370-3
+https://img8.8comic.com/3/7839/370/003_9N2.jpg
 ```
 
 ## memo

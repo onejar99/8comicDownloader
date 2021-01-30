@@ -19,7 +19,11 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
         let startIdx = htmlText.indexOf('var pi=ch;');
         let endIdx = htmlText.indexOf("var nt=");
         let tmpScript = htmlText.substring(startIdx, endIdx);
-        tmpScript = tmpScript.replace("ge(yeyt__y_6o(6)+yeyt__y_6o(5)).src=", "return 'https:' + ")
+
+        startIdx = htmlText.indexOf('ci=i;ge(');
+        endIdx = htmlText.indexOf(".src=") + 5;
+        let snippetToReplaced = htmlText.substring(startIdx, endIdx);
+        tmpScript = tmpScript.replace(snippetToReplaced, "ci=i;return 'https:' + ");
         //console.log(tmpScript);
 
         // 2. compose
