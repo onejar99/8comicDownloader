@@ -58,3 +58,12 @@ root@f2bf5f9b0c03:/8comicDownloader# node src/index.js
 ```
 
 > NOTE: If you are a Windows OS user, you must adopt the docker usage, or you maybe cannot execute it well because of a known issue caused by dependencies: https://github.com/onejar99/8comicDownloader/issues/1
+
+
+## Throttling (Rate Limiter)
+
+* Requirement description: https://github.com/onejar99/8comicDownloader/issues/3
+* Currently settings: 10 images per seconds
+* There are 2 versions spiked:
+    - support waiting (adopted): based on https://github.com/jhurliman/node-rate-limiter
+    - not support waiting: based on https://github.com/animir/node-rate-limiter-flexible

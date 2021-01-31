@@ -1,6 +1,8 @@
 const afterLoad = require('after-load');
 const commonUtil = require('./common-util.js');
-const logger = require('./logger.js')
+const logger = require('./logger.js');
+const rateLimiterNoWait = require('./rate-limiter-no-wait.js');
+const rateLimiter = require('./rate-limiter.js');
 
 const getWebFirstPageUrl = (comicId, chNo) => {
     return `https://comicbus.live/online/a-${comicId}.html?ch=${chNo}`;
@@ -79,9 +81,28 @@ const downloadSinglePage = async (fullFolderPath, comicId, chNo, pageNo) => {
     let url = tmpLib.getImgUrl();
     let savePath = `${fullFolderPath}/${commonUtil.paddingZero(chNo, 4)}_${commonUtil.paddingZero(pageNo, 3)}.jpg`;
     logger.info(`url=[${url}] savePath=[${savePath}]`);
+    //logger.info(`pageNo=[${pageNo}]`);
 
-    commonUtil.downloadAndSave(url, savePath, () => {
-        logger.info(`savePath=[${savePath}] Done!`)
+    // No wait version
+    /*rateLimiterNoWait.acquire()
+        .then(
+            () => {
+                commonUtil.downloadAndSave(url, savePath, () => {
+                    logger.info(`savePath=[${savePath}] Done!`)
+                });
+                logger.info(`pageNo=[${pageNo}] Done!`);
+            },
+            (e) => {
+                logger.error(`pageNo=[${pageNo}] ` + e.message);
+            }
+        );*/
+
+    // wait version
+    rateLimiter.acquire(pageNo, () => {
+        logger.debug(`start url=[${url}] savePath=[${savePath}]`);
+        commonUtil.downloadAndSave(url, savePath, () => {
+            logger.info(`savePath=[${savePath}] Done!`)
+        });
     });
 }
 
