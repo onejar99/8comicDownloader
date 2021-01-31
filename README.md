@@ -67,3 +67,15 @@ root@f2bf5f9b0c03:/8comicDownloader# node src/index.js
 * There are 2 versions spiked:
     - support waiting (adopted): based on https://github.com/jhurliman/node-rate-limiter
     - not support waiting: based on https://github.com/animir/node-rate-limiter-flexible
+
+## Change Log
+
+* v1.1.0 - 2021/01/31
+    * Fixed for 8comic revision (v20210131)
+    * Added logger
+    * Added throttling
+    * Added docker quick launch script for docker on Windows
+    * Upgraded axios for fixing vulnerable dependencies
+* v1.0.0 - 2020/07/05
+    * First Release
+    * Support Basic downloading feature.
