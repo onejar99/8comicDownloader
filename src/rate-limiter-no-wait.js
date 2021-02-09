@@ -1,4 +1,19 @@
 // https://github.com/animir/node-rate-limiter-flexible
+/*
+    Usage:
+    rateLimiterNoWait.acquire()
+        .then(
+            () => {
+                commonUtil.downloadAndSave(url, savePath, () => {
+                    logger.info(`savePath=[${savePath}] Done!`)
+                });
+                logger.info(`pageNo=[${pageNo}] Done!`);
+            },
+            (e) => {
+                logger.error(`pageNo=[${pageNo}] ` + e.message);
+            }
+        );
+*/
 
 const RateLimiterFlexible = require('rate-limiter-flexible');
 const rateLimiter = new RateLimiterFlexible.RateLimiterMemory({

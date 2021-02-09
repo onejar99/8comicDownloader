@@ -72,37 +72,22 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
 // [Example]
 // * target page url: https://comicbus.live/online/a-7340.html?ch=1-2
 // * result image url: https://img6.8comic.com/4/7340/1/002_Aqu.jpg
-const downloadSinglePage = async (fullFolderPath, comicId, chNo, pageNo) => {
+const downloadSinglePage = async (savePath, comicId, chNo, pageNo) => {
     let scriptName = await generateTempScriptAsync(comicId, chNo, pageNo);
     let scriptPath = `../src_tmp/${comicId}/${chNo}/${scriptName}`;
-
     logger.debug(`scriptPath=[${scriptPath}]`);
     const tmpLib = require(scriptPath);
     let url = tmpLib.getImgUrl();
-    let savePath = `${fullFolderPath}/${commonUtil.paddingZero(chNo, 4)}_${commonUtil.paddingZero(pageNo, 3)}.jpg`;
-    logger.info(`url=[${url}] savePath=[${savePath}]`);
-    //logger.info(`pageNo=[${pageNo}]`);
 
-    // No wait version
-    /*rateLimiterNoWait.acquire()
-        .then(
-            () => {
-                commonUtil.downloadAndSave(url, savePath, () => {
-                    logger.info(`savePath=[${savePath}] Done!`)
-                });
-                logger.info(`pageNo=[${pageNo}] Done!`);
-            },
-            (e) => {
-                logger.error(`pageNo=[${pageNo}] ` + e.message);
-            }
-        );*/
+    logger.info(`savePath=[${savePath}] url=[${url}]`);
+    commonUtil.downloadAndSave(url, savePath, () => {
+        logger.info(`savePath=[${savePath}] Done!`)
+    });
+}
 
-    // wait version
-    rateLimiter.acquire(pageNo, () => {
-        logger.debug(`start url=[${url}] savePath=[${savePath}]`);
-        commonUtil.downloadAndSave(url, savePath, () => {
-            logger.info(`savePath=[${savePath}] Done!`)
-        });
+const throttleTriggerDownloadSinglePage = async (savePath, comicId, chNo, pageNo) => {
+    rateLimiter.acquire(`${comicId}_${chNo}_${pageNo}`, () => {
+        downloadSinglePage(savePath, comicId, chNo, pageNo);
     });
 }
 
@@ -117,8 +102,17 @@ const downloadComic = async (outputRootFolder, comicId, chNo) => {
     logger.info(`get page count: ${pageMax}`);
     for (let i = 1; i <= pageMax; i++) {
         let pageNo = i;
+
+        // check exist first
+        let savePath = `${fullFolderPath}/${commonUtil.paddingZero(chNo, 4)}_${commonUtil.paddingZero(pageNo, 3)}.jpg`;
+        if (commonUtil.isFileExisted(savePath)) {
+            logger.info(`savePath=[${savePath}] already exist, skip.`);
+            continue;
+        }
+
         // for parallel
-        setTimeout(downloadSinglePage, 1, fullFolderPath, comicId, chNo, pageNo);
+        setTimeout(throttleTriggerDownloadSinglePage, Math.floor(Math.random() * 10) + 1, savePath, comicId, chNo, pageNo);
+
         // [experiment] download a chapter with 51 pages
         // * parallel: ~20s
         // * no parallel: ~1m20s

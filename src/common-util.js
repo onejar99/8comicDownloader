@@ -36,6 +36,10 @@ function createFolder(dirPath){
   }
 }
 
+function isFileExisted(filePath){
+  return fs.existsSync(filePath);
+}
+
 module.exports = {
-  downloadAndSave, paddingZero, createFolder, getUrlHtmlAsync, generateFile
+  downloadAndSave, paddingZero, createFolder, getUrlHtmlAsync, generateFile, isFileExisted
 };
