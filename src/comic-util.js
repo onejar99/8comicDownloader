@@ -77,6 +77,11 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
 // * result image url: https://img6.8comic.com/4/7340/1/002_Aqu.jpg
 const downloadSinglePage = async (savePath, comicId, chNo, pageNo) => {
     let scriptName = await generateTempScriptAsync(comicId, chNo, pageNo);
+    if (typeof scriptName !== "string" || scriptName.length === 0) {
+        logger.error(`generateTempScript failed, try again. (comicId=${comicId}, chNo=${chNo}, pageNo=${pageNo})`);
+        setTimeout(throttleTriggerDownloadSinglePage, 1000, savePath, comicId, chNo, pageNo);
+        return;
+    }
     let scriptPath = `../src_tmp/${comicId}/${chNo}/${scriptName}`;
     logger.debug(`scriptPath=[${scriptPath}]`);
     const tmpLib = require(scriptPath);

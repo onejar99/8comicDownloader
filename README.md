@@ -63,10 +63,17 @@ root@f2bf5f9b0c03:/8comicDownloader# node src/index.js
 ## Throttling (Rate Limiter)
 
 * Requirement description: https://github.com/onejar99/8comicDownloader/issues/3
-* Currently settings: 1 image per 5 seconds to avoid ECONNREFUSED
+* Currently settings: 10 images per second
 * There are 2 versions spiked:
     - support waiting (adopted): based on https://github.com/jhurliman/node-rate-limiter
     - not support waiting: based on https://github.com/animir/node-rate-limiter-flexible
+
+
+## Task Manager
+
+* Requirement description: https://github.com/onejar99/8comicDownloader/issues/2
+* Currently settings: 3 chapters concurrently
+
 
 ## Change Log
 
