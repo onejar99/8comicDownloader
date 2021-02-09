@@ -4,7 +4,7 @@ const RateLimiter = require('limiter').RateLimiter;
 // Allow 150 requests per hour (the Twitter search limit). Also understands
 // 'second', 'minute', 'day', or a number of milliseconds
 //var limiter = new RateLimiter(150, 'hour');
-let limiter = new RateLimiter(10, 1 * 1000);
+let limiter = new RateLimiter(1, 5 * 1000);
   // The default behaviour is to wait for the duration of the rate limiting 
   // that’s currently in effect before the callback is fired, 
   // but if you pass in true as the third parameter, 
