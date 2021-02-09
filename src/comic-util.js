@@ -68,7 +68,7 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
         return tmpScriptFileName;
     })
     .catch((errMsg)=>{
-        logger.error(`Error! Msg=[${errMsg}]`);
+        logger.error(`Error! Msg=[${errMsg}] (comicId=${comicId}, chNo=${chNo}, pageNo=${pageNo})`);
     });
 }
 
@@ -86,6 +86,10 @@ const downloadSinglePage = async (savePath, comicId, chNo, pageNo) => {
     commonUtil.downloadAndSave(url, savePath, () => {
         logger.info(`savePath=[${savePath}] Done!`);
         taskManager.doPageDone(comicId, chNo, pageNo);
+    },
+    (err) => {
+        logger.error(`savePath=[${savePath}] Error! ${err}`);
+        setTimeout(throttleTriggerDownloadSinglePage, 1000, savePath, comicId, chNo, pageNo);
     });
 }
 

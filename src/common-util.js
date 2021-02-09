@@ -2,11 +2,14 @@ const fs = require('fs')
 const request = require('request')
 const axios = require('axios');
 
-const downloadAndSave = (url, path, callback) => {
+const downloadAndSave = (url, path, closeCallback, errCallback) => {
   request.head(url, (err, res, body) => {
     request(url)
+      .on('error', function(err) {
+          errCallback(err);
+      })
       .pipe(fs.createWriteStream(path))
-      .on('close', callback)
+      .on('close', closeCallback)
   })
 }
 
