@@ -1,2 +1,5 @@
 const comicUtil = require('./comic-util.js');
-comicUtil.downloadComic('./output', 7340, 1);
+
+for(let i = 10 ; i <= 20 ; i++) {
+	comicUtil.addDownloadComicTask(102, i);
+}

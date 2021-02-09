@@ -3,6 +3,9 @@ const commonUtil = require('./common-util.js');
 const logger = require('./logger.js');
 const rateLimiterNoWait = require('./rate-limiter-no-wait.js');
 const rateLimiter = require('./rate-limiter.js');
+let {taskManager} = require('./chapter-consume-manager.js');
+
+const OUTPUT_ROOT_FOLDER = './output';
 
 const getWebFirstPageUrl = (comicId, chNo) => {
     return `https://comicbus.live/online/a-${comicId}.html?ch=${chNo}`;
@@ -81,7 +84,8 @@ const downloadSinglePage = async (savePath, comicId, chNo, pageNo) => {
 
     logger.info(`savePath=[${savePath}] url=[${url}]`);
     commonUtil.downloadAndSave(url, savePath, () => {
-        logger.info(`savePath=[${savePath}] Done!`)
+        logger.info(`savePath=[${savePath}] Done!`);
+        taskManager.doPageDone(comicId, chNo, pageNo);
     });
 }
 
@@ -91,7 +95,8 @@ const throttleTriggerDownloadSinglePage = async (savePath, comicId, chNo, pageNo
     });
 }
 
-const downloadComic = async (outputRootFolder, comicId, chNo) => {
+const downloadComic = async (comicId, chNo) => {
+    let outputRootFolder = OUTPUT_ROOT_FOLDER;
     let parentFolderPath = `${outputRootFolder}/${comicId}`;
     let fullFolderPath = `${outputRootFolder}/${comicId}/${commonUtil.paddingZero(chNo, 4)}`;
     commonUtil.createFolder(parentFolderPath);
@@ -100,6 +105,7 @@ const downloadComic = async (outputRootFolder, comicId, chNo) => {
     logger.info(`task start: ${comicId} ${chNo}`);
     let pageMax = getPageCount(comicId, chNo);
     logger.info(`get page count: ${pageMax}`);
+    taskManager.setTaskChapterInfo(comicId, chNo, pageMax);
     for (let i = 1; i <= pageMax; i++) {
         let pageNo = i;
 
@@ -107,6 +113,7 @@ const downloadComic = async (outputRootFolder, comicId, chNo) => {
         let savePath = `${fullFolderPath}/${commonUtil.paddingZero(chNo, 4)}_${commonUtil.paddingZero(pageNo, 3)}.jpg`;
         if (commonUtil.isFileExisted(savePath)) {
             logger.info(`savePath=[${savePath}] already exist, skip.`);
+            taskManager.doPageDone(comicId, chNo, pageNo);
             continue;
         }
 
@@ -133,8 +140,14 @@ const downloadComic = async (outputRootFolder, comicId, chNo) => {
     }
 }
 
-
+const addDownloadComicTask = (comicId, chNo) => {
+    const cbk = () => {
+        downloadComic(comicId, chNo);
+    }
+    taskManager.addToDoTask(comicId, chNo, cbk);
+    taskManager.startTriggerCheckDeamon();
+}
 
 module.exports = {
-    downloadComic
+    addDownloadComicTask
 };
