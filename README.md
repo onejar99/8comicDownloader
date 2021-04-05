@@ -77,6 +77,12 @@ root@f2bf5f9b0c03:/8comicDownloader# node src/index.js
 
 ## Change Log
 
+* v1.2.0 - 2021/04/05
+    * Fixed for 8comic new web url
+    * Added task manager mechanism
+    * Added retry mechanism for ECONNREFUSED
+    * Added retry mechanism for HTTP request exception
+    * Enhanced performance by tuning throttling rate and skipping existing files
 * v1.1.0 - 2021/01/31
     * Fixed for 8comic revision (v20210131)
     * Added logger
