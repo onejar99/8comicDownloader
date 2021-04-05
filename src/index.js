@@ -1,5 +1,8 @@
 const comicUtil = require('./comic-util.js');
 
-for(let i = 10 ; i <= 20 ; i++) {
-	comicUtil.addDownloadComicTask(102, i);
+let comicId = 7340;
+let from = 137;
+let to = 138;
+for(let i = from ; i <= to ; i++) {
+	comicUtil.addDownloadComicTask(comicId, i);
 }
