@@ -8,7 +8,8 @@ let {taskManager} = require('./chapter-consume-manager.js');
 const OUTPUT_ROOT_FOLDER = './output';
 
 const getWebFirstPageUrl = (comicId, chNo) => {
-    return `https://comicbus.live/online/a-${comicId}.html?ch=${chNo}`;
+    //return `https://comicbus.live/online/a-${comicId}.html?ch=${chNo}`;
+    return `https://comic.aya.click/online/b-${comicId}.html?ch=${chNo}`;
 }
 
 const getPageCount = (comicId, chNo) => {
