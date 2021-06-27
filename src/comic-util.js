@@ -8,8 +8,9 @@ let {taskManager} = require('./chapter-consume-manager.js');
 const OUTPUT_ROOT_FOLDER = './output';
 
 const getWebFirstPageUrl = (comicId, chNo) => {
-    //return `https://comicbus.live/online/a-${comicId}.html?ch=${chNo}`;
-    return `https://comic.aya.click/online/b-${comicId}.html?ch=${chNo}`;
+    // return `https://comicbus.live/online/a-${comicId}.html?ch=${chNo}`; // first version
+    // return `https://comic.aya.click/online/b-${comicId}.html?ch=${chNo}`; // v20210405
+    return `https://comic.aya.click/online/best_${comicId}.html?ch=${chNo}`; // v20210627
 }
 
 const getPageCount = (comicId, chNo) => {
