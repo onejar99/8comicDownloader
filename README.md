@@ -77,6 +77,8 @@ root@f2bf5f9b0c03:/8comicDownloader# node src/index.js
 
 ## Change Log
 
+* v1.2.1 - 2021/06/27
+    * Fixed for 8comic url revision
 * v1.2.0 - 2021/04/05
     * Fixed for 8comic new web url
     * Added task manager mechanism
