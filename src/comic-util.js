@@ -10,7 +10,8 @@ const OUTPUT_ROOT_FOLDER = './output';
 const getWebFirstPageUrl = (comicId, chNo) => {
     // return `https://comicbus.live/online/a-${comicId}.html?ch=${chNo}`; // first version
     // return `https://comic.aya.click/online/b-${comicId}.html?ch=${chNo}`; // v20210405
-    return `https://comic.aya.click/online/best_${comicId}.html?ch=${chNo}`; // v20210627
+    // return `https://comic.aya.click/online/best_${comicId}.html?ch=${chNo}`; // v20210627
+    return `https://comicabc.com/online/new-${comicId}.html?ch=${chNo}`; // v20211113
 }
 
 const getPageCount = (comicId, chNo) => {
@@ -28,9 +29,10 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
         let endIdx = htmlText.indexOf("var nt=");
         let tmpScript = htmlText.substring(startIdx, endIdx);
 
-        startIdx = htmlText.indexOf('ci=i;ge(');
-        endIdx = htmlText.indexOf(".src=") + 5;
-        let snippetToReplaced = htmlText.substring(startIdx, endIdx);
+        startIdx = tmpScript.indexOf('ci=i;ge(');
+        endIdx = tmpScript.indexOf(".src=") + 5;
+        let snippetToReplaced = tmpScript.substring(startIdx, endIdx);
+
         tmpScript = tmpScript.replace(snippetToReplaced, "ci=i;return 'https:' + ");
         logger.debug(tmpScript);
 
@@ -55,8 +57,7 @@ const generateTempScriptAsync = async (comicId, chNo, pageNo) => {
                 return (parseInt((p - 1) / 10) % 10) + (((p - 1) % 10) * 3)
             };
             var ch = ${chNo};
-            var p = ${pageNo};
-            var y = 46;`;
+            var p = ${pageNo};`;
         let footer = `} module.exports = {getImgUrl};`;
         tmpScript = header + tmpScript + footer;
 
