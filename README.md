@@ -77,6 +77,8 @@ root@f2bf5f9b0c03:/8comicDownloader# node src/index.js
 
 ## Change Log
 
+* v1.2.3 - 2022/09/02
+    * Fixed for 8comic url revision (v20220902)
 * v1.2.2 - 2021/11/13
     * Fixed for 8comic revision (v20211113)
 * v1.2.1 - 2021/06/27
